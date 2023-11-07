@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496749797933",
+    "project_id": "battleships-2c10f",
+    "storage_bucket": "battleships-2c10f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496749797933:android:7ee765c6d3f5abd16d0ea4",
+        "android_client_info": {
+          "package_name": "com.example.battleships"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXoVCvHNbYZZv8PgyDPyfChgc3Sh8bkmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
