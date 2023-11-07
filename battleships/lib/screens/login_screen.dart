@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:battleships/screens/login_screen.dart';
 
-class HomeScreen extends StatelessWidget{
-  const HomeScreen({super.key});
-
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +18,46 @@ class HomeScreen extends StatelessWidget{
             Image.asset('assets/images/logo.png', width: 220, height: 220), // Replace with the actual path to your logo image.
 
             // Add some spacing
-            SizedBox(height: 60),
+            SizedBox(height: 20),
 
-            // Use FractionallySizedBox to make the buttons 80% of the screen width
+            // Email field
+            FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Container(
+                height: buttonHeight, // Set the input field height
+                child: TextField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Email',
+                  ),
+                ),
+              ),
+            ),
+
+            // Add spacing between email and password fields
+            SizedBox(height: 20),
+
+            // Password field
+            FractionallySizedBox(
+              widthFactor: 0.8,
+              child: Container(
+                height: buttonHeight, // Set the input field height
+                child: TextField(
+                  obscureText: true, // To hide the password
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Password',
+                  ),
+                ),
+              ),
+            ),
+
+            // Add spacing between the input fields and buttons
+            SizedBox(height: 40),
+
+            // Login button
             FractionallySizedBox(
               widthFactor: 0.8,
               child: Container(
@@ -30,32 +65,12 @@ class HomeScreen extends StatelessWidget{
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle the login button press
-                    Navigator.pushNamed(context, '/login');
+                    
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
                   ),
                   child: Text('Login'),
-                ),
-              ),
-            ),
-
-            // Add spacing between the buttons
-            SizedBox(height: 40),
-
-            FractionallySizedBox(
-              widthFactor: 0.8,
-              child: Container(
-                height: buttonHeight, // Set the button height
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle the register button press
-                    Navigator.pushNamed(context, '/register');
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(buttonColor),
-                  ),
-                  child: Text('Register'),
                 ),
               ),
             ),
