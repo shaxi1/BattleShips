@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'BattleShips',
       debugShowCheckedModeBanner: false,
       theme: themeData(),
-      onGenerateRoute: MyRouter.generateRoute,
+      onGenerateRoute: MyRouter.generateRoute, // class containing app's routes
     );
   }
 }
