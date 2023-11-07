@@ -8,7 +8,6 @@ import 'package:battleships/screens/home_screen.dart';
 import 'package:battleships/screens/login_screen.dart';
 import 'package:battleships/screens/register_screen.dart';
 import 'package:battleships/screens/main_screen.dart';
-import 'package:battleships/screens/register_success.dart';
 
 import 'routes.dart';
 
