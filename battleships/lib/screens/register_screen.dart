@@ -1,7 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class RegisterScreen extends StatelessWidget {
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+Future<void> registerUser(String email, String password, BuildContext context) async {
+  try {
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    Navigator.pushNamed(context, '/registersuccess');
+  } catch (e) {
+    // Handle registration failure
+  }
+}
+
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> { 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nicknameController = TextEditingController();
+  TextEditingController repeatPasswordController = TextEditingController();
+
+    @override
+  void dispose() {
+    // Dispose of the controllers to free up resources when the widget is removed
+    emailController.dispose();
+    passwordController.dispose();
+    nicknameController.dispose();
+    repeatPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +62,7 @@ class RegisterScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -44,6 +81,7 @@ class RegisterScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: nicknameController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -62,6 +100,7 @@ class RegisterScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: passwordController,
                   obscureText: true, // To hide the password
                   decoration: InputDecoration(
                     filled: true,
@@ -81,6 +120,7 @@ class RegisterScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: repeatPasswordController,
                   obscureText: true, // To hide the repeat password
                   decoration: InputDecoration(
                     filled: true,
@@ -102,6 +142,14 @@ class RegisterScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle the registration button press
+                    String email = emailController.text;
+                    String password = passwordController.text;
+                    String nickname = nicknameController.text;
+                    String repeatPassword = repeatPasswordController.text;
+
+                    //dodac checkowanie czy hasla sa takie same itd.
+
+                    registerUser(email, password, context);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),

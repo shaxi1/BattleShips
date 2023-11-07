@@ -1,3 +1,4 @@
+import 'package:battleships/screens/register_success.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -6,6 +7,8 @@ import 'firebase_options.dart';
 import 'package:battleships/screens/home_screen.dart';
 import 'package:battleships/screens/login_screen.dart';
 import 'package:battleships/screens/register_screen.dart';
+import 'package:battleships/screens/main_screen.dart';
+import 'package:battleships/screens/register_success.dart';
 
 import 'routes.dart';
 
@@ -31,7 +34,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
-        // '/home': (context) => const HomeScreen(),
+        '/registersuccess': (context) => const RegisterSuccess(),
+        '/home': (context) => const MainScreen(),
         // '/game': (context) => const GameScreen(),
       },
       onGenerateRoute: MyRouter.generateRoute,

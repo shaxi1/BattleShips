@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+Future<void> loginUser(String email, String password, BuildContext context) async {
+  try {
+    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    Navigator.pushNamed(context, '/home');
+  } catch (e) {
+    // Handle login failure
+  }
+}
+
+
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    // Dispose of the controllers to free up resources when the widget is removed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +59,7 @@ class LoginScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Colors.white,
@@ -44,6 +78,7 @@ class LoginScreen extends StatelessWidget {
               child: Container(
                 height: buttonHeight, // Set the input field height
                 child: TextField(
+                  controller: passwordController,
                   obscureText: true, // To hide the password
                   decoration: InputDecoration(
                     filled: true,
@@ -64,8 +99,12 @@ class LoginScreen extends StatelessWidget {
                 height: buttonHeight, // Set the button height
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle the login button press
-                    
+                    // Get the text from the email and password fields
+                    String email = emailController.text;
+                    String password = passwordController.text;
+
+                    // You can now use the email and password variables as needed.
+                    loginUser(email, password, context);
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
@@ -74,6 +113,9 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
             ),
+
+            // Add spacing between the buttons
+            SizedBox(height: 20),
           ],
         ),
       ),
