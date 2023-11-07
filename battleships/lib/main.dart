@@ -1,4 +1,5 @@
 import 'package:battleships/screens/register_success.dart';
+import 'package:battleships/theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'BattleShips',
       debugShowCheckedModeBanner: false,
-      // theme: themeData(),
+      theme: themeData(),
       initialRoute: '/',
       routes: {
         '/': (context) => const HomeScreen(),

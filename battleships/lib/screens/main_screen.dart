@@ -5,8 +5,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF141D26), // Set the background color
+    return const Scaffold(
       body: Center(
         child: Text(
           "In Construction",
