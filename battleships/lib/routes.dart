@@ -1,3 +1,4 @@
+import 'package:battleships/screens/ship_deployment.dart';
 import 'package:flutter/material.dart';
 
 import 'package:battleships/screens/login_screen.dart';
@@ -19,6 +20,8 @@ class MyRouter {
         return MaterialPageRoute(builder: (_) => const RegisterSuccess());
       case '/home':
         return MaterialPageRoute(builder: (_) => const MainScreen());
+      case '/ship-deployment':
+        return MaterialPageRoute(builder: (_) => const ShipPlacementScreen());
       // case '/game':
       //   return MaterialPageRoute(builder: (_) => const GameScreen());
       default:
