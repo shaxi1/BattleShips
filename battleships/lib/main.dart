@@ -22,6 +22,8 @@ class MyApp extends StatelessWidget {
       title: 'BattleShips',
       debugShowCheckedModeBanner: false,
       theme: themeData(),
+      // initialRoute:
+      //     '/ship-deployment', // TODO: remove line, only for ship deployment testing
       onGenerateRoute: MyRouter.generateRoute, // class containing app's routes
     );
   }
