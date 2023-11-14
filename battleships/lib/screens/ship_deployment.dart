@@ -29,6 +29,7 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     board = List.generate(
         boardSize, (index) => Ship(rotation: 'up', size: 0, shipPart: 'water'));
     _initializeShips();
+    _randomizeShipRotations(boardSize);
   }
 
   // Function to initialize ships randomly
@@ -81,6 +82,15 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     }
   }
 
+  void _randomizeShipRotations(int boardSize) {
+    for (int i = 0; i < boardSize; i++) {}
+  }
+
+  void _confirmShipPlacement() {
+    // Handle ship placement confirmation logic here
+    print('Ship placement confirmed!');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,43 +99,54 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: orientation == Orientation.portrait ? 10 : 15,
-            ),
-            itemBuilder: (context, index) {
-              Ship ship = board[index];
-              String imagePath;
-              if (ship.shipPart == 'water') {
-                imagePath =
-                    'assets/water.png'; // Change this to your water image
-              } else {
-                imagePath = shipImagePaths[ship.size] ?? '';
-              }
+          return Column(
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                        orientation == Orientation.portrait ? 10 : 15,
+                  ),
+                  itemBuilder: (context, index) {
+                    Ship ship = board[index];
+                    String imagePath;
+                    if (ship.shipPart == 'water') {
+                      imagePath =
+                          'assets/water.png'; // Change this to your water image
+                    } else {
+                      imagePath = shipImagePaths[ship.size] ?? '';
+                    }
 
-              // Rotate the image if ship's rotation is not 'up'
-              Widget imageWidget = ship.rotation != 'up'
-                  ? Transform.rotate(
-                      angle: ship.rotation == 'right' ? -pi / 2 : pi / 2,
-                      child: Image.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
+                    // Rotate the image if ship's rotation is not 'up'
+                    Widget imageWidget = ship.rotation != 'up'
+                        ? Transform.rotate(
+                            angle: ship.rotation == 'right' ? -pi / 2 : pi / 2,
+                            child: Image.asset(
+                              imagePath,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                          );
+
+                    // Add borders to simulate grid lines
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black),
                       ),
-                    )
-                  : Image.asset(
-                      imagePath,
-                      fit: BoxFit.cover,
+                      child: imageWidget,
                     );
-
-              // Add borders to simulate grid lines
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+                  },
+                  itemCount: board.length,
                 ),
-                child: imageWidget,
-              );
-            },
-            itemCount: board.length,
+              ),
+              ElevatedButton(
+                onPressed: _confirmShipPlacement,
+                child: Text('Confirm Ship Placement'),
+              ),
+            ],
           );
         },
       ),
