@@ -29,7 +29,7 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     board = List.generate(
         boardSize, (index) => Ship(rotation: 'up', size: 0, shipPart: 'water'));
     _initializeShips();
-    _randomizeShipRotations(boardSize);
+    _randomizeShipRotations(boardLength);
   }
 
   // Function to initialize ships randomly
@@ -82,8 +82,166 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     }
   }
 
-  void _randomizeShipRotations(int boardSize) {
-    for (int i = 0; i < boardSize; i++) {}
+  void _randomizeShipRotations(int boardLength) {
+    for (int i = 0; i < boardLength * boardLength; i++) {
+      if (board[i].shipPart == 'head') {
+        String rotation =
+            shipRotatable(i, boardLength, board[i], getRandomRotation());
+        if (rotation != '') {
+          rotateShip(i, rotation, boardLength);
+        }
+      }
+    }
+  }
+
+  String getRandomRotation() {
+    Random random = Random();
+    List<String> rotations = ['up', 'down', 'left', 'right'];
+    int randomRotationIndex = random.nextInt(4);
+    return rotations[randomRotationIndex];
+  }
+
+  String shipRotatable(
+      int headIndex, int boardLength, Ship ship, String rotation) {
+    String currentRotation = ship.rotation;
+    int size = ship.size;
+    int boardSize = boardLength * boardLength;
+
+    if (rotation == 'up') {
+      if (headIndex - size * boardLength < 0) {
+        return '';
+      }
+      for (int i = 1; i < size; i++) {
+        if (board[headIndex - i * boardLength].shipPart != 'water') {
+          return '';
+        }
+      }
+    } else if (rotation == 'down') {
+      if (headIndex + size * boardLength >= boardSize) {
+        return '';
+      }
+      for (int i = 1; i < size; i++) {
+        if (board[headIndex + i * boardLength].shipPart != 'water') {
+          return '';
+        }
+      }
+    } else if (rotation == 'left') {
+      if (headIndex % boardLength < size - 1) {
+        return '';
+      }
+      for (int i = 1; i < size; i++) {
+        if (board[headIndex - i].shipPart != 'water') {
+          return '';
+        }
+      }
+    } else if (rotation == 'right') {
+      if (headIndex % boardLength > boardLength - size) {
+        return '';
+      }
+      for (int i = 1; i < size; i++) {
+        if (board[headIndex + i].shipPart != 'water') {
+          return '';
+        }
+      }
+    }
+    return rotation;
+  }
+
+  void rotateShip(int headIndex, String rotation, int boardLength) {
+    int size = board[headIndex].size;
+    int boardSize = boardLength * boardLength;
+    String currentShipRotation = board[headIndex].rotation;
+
+    // Clean up remaining pieces by setting shipPart to 'water'
+    for (int i = 1; i < size; i++) {
+      if (currentShipRotation == 'right') {
+        board[headIndex + i].shipPart = 'water';
+      } else if (currentShipRotation == 'left') {
+        board[headIndex - i].shipPart = 'water';
+      } else if (currentShipRotation == 'up') {
+        board[headIndex + i * boardLength].shipPart = 'water';
+      } else if (currentShipRotation == 'down') {
+        board[headIndex - i * boardLength].shipPart = 'water';
+      }
+    }
+
+    if (rotation == 'right') {
+      for (int i = 0; i < size; i++) {
+        if (i == 0) {
+          board[headIndex + i] = Ship.copy(board[headIndex + i],
+              rotation: 'right', shipPart: 'head', isHit: false, size: size);
+        } else if (i == size - 1) {
+          board[headIndex + i] = Ship.copy(board[headIndex + i],
+              rotation: 'right', shipPart: 'tail', isHit: false, size: size);
+        } else {
+          board[headIndex + i] = Ship.copy(board[headIndex + i],
+              rotation: 'right', shipPart: 'middle', isHit: false, size: size);
+        }
+      }
+    } else if (rotation == 'left') {
+      for (int i = 0; i < size; i++) {
+        if (i == 0) {
+          board[headIndex - i] = Ship.copy(board[headIndex - i],
+              rotation: 'left', shipPart: 'head', isHit: false, size: size);
+        } else if (i == size - 1) {
+          board[headIndex - i] = Ship.copy(board[headIndex - i],
+              rotation: 'left', shipPart: 'tail', isHit: false, size: size);
+        } else {
+          board[headIndex - i] = Ship.copy(board[headIndex - i],
+              rotation: 'left', shipPart: 'middle', isHit: false, size: size);
+        }
+      }
+    } else if (rotation == 'up') {
+      for (int i = 0; i < size; i++) {
+        if (i == 0) {
+          board[headIndex + i * boardLength] = Ship.copy(
+              board[headIndex + i * boardLength],
+              rotation: 'up',
+              shipPart: 'head',
+              isHit: false,
+              size: size);
+        } else if (i == size - 1) {
+          board[headIndex + i * boardLength] = Ship.copy(
+              board[headIndex + i * boardLength],
+              rotation: 'up',
+              shipPart: 'tail',
+              isHit: false,
+              size: size);
+        } else {
+          board[headIndex + i * boardLength] = Ship.copy(
+              board[headIndex + i * boardLength],
+              rotation: 'up',
+              shipPart: 'middle',
+              isHit: false,
+              size: size);
+        }
+      }
+    } else if (rotation == 'down') {
+      for (int i = 0; i < size; i++) {
+        if (i == 0) {
+          board[headIndex - i * boardLength] = Ship.copy(
+              board[headIndex - i * boardLength],
+              rotation: 'down',
+              shipPart: 'head',
+              isHit: false,
+              size: size);
+        } else if (i == size - 1) {
+          board[headIndex - i * boardLength] = Ship.copy(
+              board[headIndex - i * boardLength],
+              rotation: 'down',
+              shipPart: 'tail',
+              isHit: false,
+              size: size);
+        } else {
+          board[headIndex - i * boardLength] = Ship.copy(
+              board[headIndex - i * boardLength],
+              rotation: 'down',
+              shipPart: 'middle',
+              isHit: false,
+              size: size);
+        }
+      }
+    }
   }
 
   void _confirmShipPlacement() {
