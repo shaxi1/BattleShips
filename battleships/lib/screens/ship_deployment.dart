@@ -48,7 +48,7 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     Random random = Random();
     while (true) {
       int headIndex = random.nextInt(boardSize - shipSize * boardLength);
-      print(headIndex);
+      //print(headIndex);
       // check if the ship can be placed at the chosen index
       bool canPlace = true;
       for (int i = 0; i < shipSize; i++) {
