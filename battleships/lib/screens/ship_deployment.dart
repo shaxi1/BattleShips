@@ -28,17 +28,17 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     int boardSize = boardLength * boardLength;
     board = List.generate(
         boardSize, (index) => Ship(rotation: 'up', size: 0, shipPart: 'water'));
-    _initializeShips();
+    _initializeShips(boardLength);
     _randomizeShipRotations(boardLength);
   }
 
   // Function to initialize ships randomly
-  void _initializeShips() {
+  void _initializeShips(int boardLength) {
     // Initialize ships based on the given counts
     Map<int, int> shipCounts = {1: 4, 2: 3, 3: 2, 4: 1};
     for (int shipSize in shipCounts.keys) {
       for (int i = 0; i < shipCounts[shipSize]!; i++) {
-        _initializeShip(shipSize, 10);
+        _initializeShip(shipSize, boardLength);
       }
     }
   }
