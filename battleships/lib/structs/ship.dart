@@ -2,7 +2,7 @@ class Ship {
   String rotation; // 'left', 'right', 'down', 'up'
   bool isHit;
   int size;
-  String shipPart; // 'edge' - head or tail, 'middle', 'water'
+  String shipPart; // 'head' or 'tail', 'middle', 'water'
 
   Ship(
       {required this.rotation,

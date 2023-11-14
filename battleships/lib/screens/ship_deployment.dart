@@ -70,8 +70,10 @@ class _ShipPlacementScreenState extends State<ShipPlacementScreen> {
     for (int i = 0; i < size; i++) {
       Ship ship;
       // head or tail of the ship
-      if (i == 0 || i == size - 1) {
-        ship = Ship(rotation: 'up', size: size, shipPart: 'edge');
+      if (i == 0) {
+        ship = Ship(rotation: 'up', size: size, shipPart: 'head');
+      } else if (i == size - 1) {
+        ship = Ship(rotation: 'up', size: size, shipPart: 'tail');
       } else {
         ship = Ship(rotation: 'up', size: size, shipPart: 'middle');
       }
