@@ -1,5 +1,5 @@
 class Ship {
-  String rotation; // 'l', 'r', 'd', 'u'
+  String rotation; // 'left', 'right', 'down', 'up'
   bool isHit;
   int size;
 
