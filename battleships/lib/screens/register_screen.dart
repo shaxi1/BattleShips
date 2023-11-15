@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-Future<void> registerUser(String email, String password, BuildContext context) async {
+Future<void> registerUser(String email, String password, String nickname, String repeatPassword, BuildContext context) async {
   try {
     UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+
+    await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'friends': [],
+        'nickname': nickname,
+        'points': 0,
+        'isAvailable': false,
+      });
     Navigator.pushNamed(context, '/registersuccess');
   } catch (e) {
     // Handle registration failure
@@ -150,7 +161,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       
                       //dodac checkowanie czy hasla sa takie same itd.
       
-                      registerUser(email, password, context);
+                      registerUser(email, password, nickname, repeatPassword, context);
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(buttonColor),
