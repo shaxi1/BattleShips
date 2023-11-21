@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:battleships/providers/AuthProvider.dart';
+
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
-Future<void> loginUser(String email, String password, BuildContext context) async {
-  try {
-    UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    Navigator.pushNamed(context, '/home');
-  } catch (e) {
-    // Handle login failure
-  }
-}
-
 
 
 class LoginScreen extends StatefulWidget {
@@ -98,13 +89,19 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 height: buttonHeight, // Set the button height
                 child: ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Get the text from the email and password fields
                     String email = emailController.text;
                     String password = passwordController.text;
 
                     // You can now use the email and password variables as needed.
-                    loginUser(email, password, context);
+                    AuthProvider authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+                    await authProvider.signInWithEmailAndPassword(email, password);
+
+                    if (authProvider.user != null) {
+                      Navigator.pushNamed(context, '/home');
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),

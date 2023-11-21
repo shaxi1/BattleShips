@@ -4,6 +4,8 @@ import 'firebase_options.dart';
 
 import 'routes.dart';
 import 'package:battleships/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:battleships/providers/AuthProvider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,13 +20,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => AuthProvider(),
+      child: MaterialApp(
       title: 'BattleShips',
       debugShowCheckedModeBanner: false,
       theme: themeData(),
       // initialRoute:
       //     '/ship-deployment', // TODO: remove line, only for ship deployment testing
       onGenerateRoute: MyRouter.generateRoute, // class containing app's routes
+    )
     );
   }
 }
