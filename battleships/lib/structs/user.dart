@@ -12,4 +12,14 @@ class User {
   required this.points, 
   required this.isAvailable, 
   required this.friends});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'nickname': nickname,
+      'points': points,
+      'isAvailable': isAvailable,
+      'friends': friends,
+    };
+  }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
+//TODO: move this to AuthProvider.dart
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<void> registerUser(String email, String password, String nickname, String repeatPassword, BuildContext context) async {

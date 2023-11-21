@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:battleships/providers/AuthProvider.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -15,19 +18,53 @@ class MainScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Consumer<AuthProvider>(
+              builder: (context, authProvider, child) {
+                // Check if the user is authenticated
+                if (authProvider.user != null && authProvider.userData != null) {
+                  String nickname = authProvider.userData!['nickname'];
+
+                  // Display the user's nickname
+                  return Text(
+                    'Welcome, $nickname!',
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  );
+                  
+                } else {
+                  // If the user is not authenticated, show a login button
+                  return FractionallySizedBox(
+                    widthFactor: 0.8,
+                    child: Container(
+                      height: buttonHeight,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(buttonColor),
+                        ),
+                        child: Text('Login'),
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+            SizedBox(height: 20), // Add spacing between buttons
             FractionallySizedBox(
               widthFactor: 0.8,
               child: Container(
                 height: buttonHeight,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Handle the login button press
-                    Navigator.pushNamed(context, '/login');
+                    // Handle the second button press
+                    // Replace '/second' with your desired route
+                    //Navigator.pushNamed(context, '/second');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
                   ),
-                  child: Text('Gra rankingowa'),
+                  child: Text('Utwórz pokój'),
                 ),
               ),
             ),
@@ -40,12 +77,12 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle the second button press
                     // Replace '/second' with your desired route
-                    Navigator.pushNamed(context, '/second');
+                    //Navigator.pushNamed(context, '/second');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
                   ),
-                  child: Text('Utworz pokoj'),
+                  child: Text('Szukaj pokojów'),
                 ),
               ),
             ),
@@ -58,12 +95,12 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle the third button press
                     // Replace '/third' with your desired route
-                    Navigator.pushNamed(context, '/third');
+                    //Navigator.pushNamed(context, '/third');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
                   ),
-                  child: Text('Utworz turniej'),
+                  child: Text('Znajomi'),
                 ),
               ),
             ),
@@ -76,12 +113,12 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     // Handle the fourth button press
                     // Replace '/fourth' with your desired route
-                    Navigator.pushNamed(context, '/fourth');
+                    //Navigator.pushNamed(context, '/fourth');
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(buttonColor),
                   ),
-                  child: Text('Przegladaj turnieje'),
+                  child: Text('Ranking'),
                 ),
               ),
             ),
